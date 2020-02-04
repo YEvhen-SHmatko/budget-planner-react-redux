@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-// import shortid from 'shortid';
-// import * as budgetAppActions from '../redux/budgetApp/budgetAppAction';
 import BudgetForm from './BudgetForm';
 import ExpenseForm from './ExpenseForm';
 import ExpensesTable from './ExpensesTable';
 import Values from './Values';
+import * as budgetAppSelectors from '../redux/budgetApp/budgetAppSelectors';
 
 const Container = styled.div`
   display: grid;
@@ -35,7 +34,7 @@ App.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 const mapStateToProps = store => ({
-  expenses: store.budgetApp.expenses,
+  expenses: budgetAppSelectors.getExpenses(store),
 });
 
 export default connect(mapStateToProps, null)(App);

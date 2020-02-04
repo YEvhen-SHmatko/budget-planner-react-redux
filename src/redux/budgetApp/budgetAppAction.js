@@ -9,20 +9,20 @@ export const setBudgetAction = value => {
   };
 };
 
-export const addExpenseAction = expense => {
+export const addExpenseAction = data => {
   return {
     type: types.ADD_EXPENSE,
     payload: {
-      expense,
+      expense: data,
     },
   };
 };
 
-export const removeExpenseAction = id => {
+export const removeExpenseAction = value => {
   return {
     type: types.REMOVE_EXPENSE,
     payload: {
-      id,
+      id: value,
     },
   };
 };

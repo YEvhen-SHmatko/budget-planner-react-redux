@@ -3,12 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Value from './Value';
-
-const calculateTotalExpenses = expenses => {
-  return expenses.reduce((total, expense) => total + expense.amount, 0);
-};
-
-const calculateBalance = (budget, expenses) => budget - expenses;
+import * as budgetAppSelectors from '../redux/budgetApp/budgetAppSelectors';
 
 const Container = styled.section`
   display: inline-flex;
@@ -16,9 +11,7 @@ const Container = styled.section`
   align-items: center;
 `;
 
-const Values = ({ budget, expenses }) => {
-  const totalExpenses = calculateTotalExpenses(expenses);
-  const balance = calculateBalance(budget, totalExpenses);
+const Values = ({ budget, totalExpenses, balance }) => {
   return (
     <Container>
       <Value label="Budget" value={budget} isPositive />
@@ -30,11 +23,13 @@ const Values = ({ budget, expenses }) => {
 
 Values.propTypes = {
   budget: PropTypes.number.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  totalExpenses: PropTypes.number.isRequired,
+  balance: PropTypes.number.isRequired,
 };
 const mapStateToProps = store => ({
-  expenses: store.budgetApp.expenses,
-  budget: store.budgetApp.budget,
+  balance: budgetAppSelectors.getBalance(store),
+  totalExpenses: budgetAppSelectors.getTotalExpenses(store),
+  budget: budgetAppSelectors.getBudget(store),
 });
 
 export default connect(mapStateToProps, null)(Values);
